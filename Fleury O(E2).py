@@ -1,7 +1,12 @@
+from collections import defaultdict, Counter
+
+
+
 class Graph(object):
     def __init__(self, num):
         self.num = num
         self.adj = [[] for _ in range(self.num)]
+        self.assemble = ''
 
     def add_edge(self, u, v):
         self.adj[u].append(v)
@@ -50,7 +55,8 @@ class Graph(object):
         next = -1
         for i in self.adj[v]:
             if length == 1:
-                print('%d-%d' % (v, i))
+                # print('%d-%d' % (v, i))
+                self.assemble += v_list[i][-1]
                 self.adj[v].remove(i)
                 self.adj[i].remove(v)
                 self.find_eulerian(i)
@@ -65,8 +71,8 @@ class Graph(object):
                 self.recover_edge(v, i, idx1, idx2)
 
                 if reach1 == reach2:
-                    # paths.append('%d-%d' % (v, i))
-                    print('%d-%d' % (v, i))
+                    # print('%d-%d' % (v, i))
+                    self.assemble += v_list[i][-1]
                     next = i
                     self.adj[v].remove(i)
                     self.adj[i].remove(v)
@@ -75,9 +81,53 @@ class Graph(object):
         if next != -1:
             self.find_eulerian(next)
 
+
+v_list = []
+
 if __name__ == '__main__':
-    g1 = Graph(4)
-    g1.add_edge_list([(0,1), (0,2), (1,2), (2,3), (3,1)] )
-    g1.find_eulerian(2)
+    k = 4 # k-mer
+    s = 'TTACTGTCACGGCCTAAATC'
+    s_list = []
+
+    for i in range(len(s)-k+1):
+        s_list.append(s[i:i+k])
+
+    dic = defaultdict(int)
+    for short in s_list:
+        dic[short[:3]] += 1
+        dic[short[1:]] += 1
+
+    # print(Counter(dic))
+
+    lst = list(dic.keys())
+    v_list = lst
+    # print(v_list)
+    num = defaultdict(int)
+    for i in range(len(v_list)):
+        num[v_list[i]] = i
 
 
+    g1 = Graph(len(v_list))
+
+    for short in s_list:
+        g1.add_edge(num[short[:3]], num[short[1:]])
+
+    g1.assemble = s[:3]
+    g1.find_eulerian(num[s[:3]])
+
+    print(s)
+    print(g1.assemble)
+
+    # g1 = Graph(10)
+    # g1.add_edge_list([(0,1), (0,2), (1,2), (2,3), (3,1)] )
+    # g1.find_eulerian(2)
+
+
+'''
+# test:
+GGAAAGCCGCTGTGCTAAAG
+CTAAAGAACGCTATTTTAGA
+CCGAGCTAAATGGAGCTGTA
+TTACTGTCACGGCCTAAATC
+CTTACGGATGGCTTACCATA
+'''
