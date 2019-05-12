@@ -75,12 +75,9 @@ class Graph(object):
         if next != -1:
             self.find_eulerian(next)
 
-
-
 if __name__ == '__main__':
     g1 = Graph(4)
     g1.add_edge_list([(0,1), (0,2), (1,2), (2,3), (3,1)] )
     g1.find_eulerian(2)
-
 
 
