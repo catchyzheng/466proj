@@ -8,19 +8,15 @@ public class compare {
 		String[] keysOG = gd.getKeys("OG");
 		String data = gd.getOriginal();
 		
-		Overlap_Naive m1 = new Overlap_Naive(keysOG);
-		Overlap_DP m2 = new Overlap_DP(keysOG);
-		De_Bruijn_1 m3 = new De_Bruijn_1(keysDB);
-		De_Bruijn_2 m4 = new De_Bruijn_2(keysDB);
-		
 		
 		System.out.println("String length is set to be " + data.length());
 		System.out.println("Orignal string is:\n" + data);
 		System.out.println("-------------------");
 		
-		System.out.println("For Overlapped method input size is " + keysOG.length);
+		System.out.println("For Overlap graph method input size is " + keysOG.length);
 		
 		long start1 = System.currentTimeMillis();
+		Overlap_Naive m1 = new Overlap_Naive(keysOG);
 		String res1 = m1.getString();
 		long finish1 = System.currentTimeMillis();
 		long timeElapsed1 = finish1 - start1;
@@ -31,9 +27,10 @@ public class compare {
 			System.out.println("Recovered string matches the orginial!");
 		else
 			System.out.println("Recovered string mismatches the original!");
-		System.out.println("-------------------");
+		System.out.println();
 		
 		long start2 = System.currentTimeMillis();
+		Overlap_DP m2 = new Overlap_DP(keysOG);
 		String res2 = m2.getString();
 		long finish2 = System.currentTimeMillis();
 		long timeElapsed2 = finish2 - start2;
@@ -45,11 +42,12 @@ public class compare {
 		else
 			System.out.println("Recovered string mismatches the original!");
 		
-		System.out.println("-------------------");
+		System.out.println();
 		
 		System.out.println("For De Bruijn method input size is " + keysDB.length);
 		
 		long start3 = System.currentTimeMillis();
+		De_Bruijn_1 m3 = new De_Bruijn_1(keysDB);
 		String res3 = m3.getString();
 		long finish3 = System.currentTimeMillis();
 		long timeElapsed3 = finish3 - start3;
@@ -63,6 +61,7 @@ public class compare {
 		System.out.println("-------------------");
 		
 		long start4 = System.currentTimeMillis();
+		De_Bruijn_2 m4 = new De_Bruijn_2(keysDB);
 		String res4 = m4.getString();
 		long finish4 = System.currentTimeMillis();
 		long timeElapsed4 = finish4 - start4;
