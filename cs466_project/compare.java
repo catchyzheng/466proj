@@ -3,13 +3,14 @@ package cs466_project;
 public class compare {
 
 	public static void main(String[] args) {
-		generate_data gd = new generate_data(20, 6);
+		int l = 20, k = 6;
+		generate_data gd = new generate_data(l, k);
 		String[] keysDB = gd.getKeys("DB");
 		String[] keysOG = gd.getKeys("OG");
 		String data = gd.getOriginal();
 		
 		
-		System.out.println("String length is set to be " + data.length());
+		System.out.println("String length is set to be " + l + ", and k is set to be " + k);
 		System.out.println("Orignal string is:\n" + data);
 		System.out.println("-------------------");
 		
